@@ -14,41 +14,53 @@ use warnings;
 ## Check prices an ajust it !!!!
 ####
 ########## 1TB  2TB  3TB  4TB  5TB  6TB  7TB  8TB
-my @disks=( 40,  50,  80, 100, 130, 170, 210, 245 ); # euro
+my @disks=( 40,  56,  82, 112, 140, 180, 210, 225 ); # euro
 my $tb;
 my $data;
 my $sum;
 my $avg;
 my @logic;
+my ($out5,$out6,$avgtb);
 
 ####
 # Begin Calc
 ####
-for (my $i=3; $i <= 10; $i++) #count disks
+for (my $i=3; $i <= 8; $i++) #count disks
 {
    foreach (my $p=0; $p <= $#disks; $p++ ) # count TB
    {
-      if ( $i <= 5) # do the raid5 stuff
-      {
+      #if ( $i <= 6) # do the raid5 stuff
+      #{
          $tb=$p+1;
          $data=($i-1)*$tb; 
          $sum=$i*$disks[$p];
-         $avg=int($sum/$data);
-         print "Raid5  $i=DISKs with $tb=TB , $data=TB , $sum euro,  avg: $avg euro \n";
-      }
-      else # do the raid6 stuff
-      {
-         $tb=$p+1;
-         $data=($i-2)*$tb;
-         $sum=$i*$disks[$p];
-         $avg=int($sum/$data);
-         print "Raid6  $i=DISKs with $tb=TB , $data=TB , $sum euro,  avg: $avg euro \n";
-      
-      }
+         $avg=int($sum/$data); #gerundet 
+	 $avgtb=int(($data/$sum)*1024); # gerundet
+         #$out5 .="Raid5  $i=DISKs with $tb=TB , $data=TB , $sum euro,  avg: $avg euro/TB ,avgTB: $avgtb GB/euro\n";
+         $out5 .="$avg euro/TB , Raid5  $i=DISKs with $tb=TB , $data=TB , $sum euro,  avg: $avg euro/TB ,avgTB: $avgtb GB/euro\n";
+      #}
+     # else # do the raid6 stuff
+     # {
+     #    $tb=$p+1;
+     #    $data=($i-2)*$tb;
+     #    $sum=$i*$disks[$p];
+     #    $avg=int($sum/$data);
+     #    $out6 .= "Raid6  $i=DISKs with $tb=TB , $data=TB , $sum euro,  avg: $avg euro/TB \n";
+     # 
+     # }
    }
 }
 
+#print "$out5";
+
+
 ####
 # Find the best price for the most data space !
+foreach my $in ($out5)
+{
+	
+	print "$in\n"
+}
+
 ####
 # todo
